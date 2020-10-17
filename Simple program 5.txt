@@ -1,0 +1,140 @@
+#include<stdio.h>
+#include <iostream>
+#include<GL/gl.h>
+#include <GL/glut.h>
+#include<math.h>
+using namespace std;
+
+float Xi,Yi,Xn,Yn,X1,Y1,X2,Y2;
+
+void plot(float X, float Y)
+{
+glClear (GL_COLOR_BUFFER_BIT);
+glColor3f (0.0, 0.0, 1.0);
+glPointSize(2.0);
+glBegin(GL_POINTS);
+glColor3f (0.0, 0.0, 1.0);
+glVertex2i(X,Y);
+
+}
+
+void myDisplay(void)
+{
+float dy,dx,slope;
+dx=(Xn-Xi);
+dy=(Yn-Yi);
+slope=(dy/dx);
+
+for(int i=Xi;i<Xn;i++)
+{
+    if(slope<1)
+  {
+        Xi=Xi+1;
+        Yi=Yi+slope;
+        plot(Xi,round(Yi));
+   }
+
+    else if(slope>1)
+     {
+         Xi=(Xi+(1/slope));
+         Yi=Yi+1;
+         plot(round(Xi),Yi);
+
+     }
+
+      else
+        {
+           Xi=Xi+1;
+           Yi=Yi+1;
+           plot(Xi,Yi);
+        }
+
+}
+
+
+
+float dx1=X2-X1;
+float dy1=Y2-Y1;
+float m1=(dy1/dx1);
+float Xm=X1+1;
+float Ym=Y1+1;
+int k=0;
+float Pk =(2*(dy1)-dx1);
+float Pk1= (Pk+(2*(dy1))-(2*(dx1)*(Ym-Y1)));
+
+if(m1<1)
+{
+    for(int i=0;i<dx1;i++)
+    {
+        if(k==0)
+            {
+                Pk=Pk;
+            }
+        else{
+            Pk=Pk1;
+        }
+
+        if(Pk>=0)
+        {
+            X1=X1+1;
+            Y1=Y1+1;
+            plot(X1,Y1);
+            k++;
+        }
+        else
+            {
+                X1=X1+1;
+                Y1=Y1;
+                plot(X1,Y1);
+                k++;
+            }
+    }
+
+    }
+
+else{
+    cout<<"inappropriate value of m1"<<endl;
+}
+
+glEnd();
+glFlush();
+}
+
+
+
+int round (float Yi)
+{
+    Yi=Yi+0.5;
+    floor(Yi);
+    return Yi;
+}
+
+void myInit (void)
+{
+glClearColor(1.0, 1.0, 1.0, 0.0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(0.0, 640.0, 0.0, 480.0);
+}
+
+int main(int argc, char** argv)
+{
+cout<<"Enter values of Xi and Yi"<<" "<<endl;
+cin>>Xi>>Yi;
+cout<<"Enter values of Xn and Yn"<<" "<<endl;
+cin>>Xn>>Yn;
+cout<<"Enter values of X1 and Y1"<<" "<<endl;
+cin>>X1>>Y1;
+cout<<"Enter values of X2 and Y2"<<" "<<endl;
+cin>>X2>>Y2;
+glutInit(&argc, argv);
+glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+glutInitWindowSize (640, 480);
+glutInitWindowPosition (300, 200);
+glutCreateWindow ("Assignment 5");
+glutDisplayFunc(myDisplay);
+myInit ();
+glutMainLoop();
+
+}
+

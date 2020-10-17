@@ -1,0 +1,81 @@
+#include <iostream>
+#include<GL/gl.h>
+#include <GL/glut.h>
+
+void myDisplay(void)
+{
+glClear (GL_COLOR_BUFFER_BIT);
+glColor3f (0.0, 0.0, 1.0);
+glPointSize(5.0);
+
+glBegin(GL_LINES);
+glVertex2i(0, 240);
+glVertex2i(640, 240);
+glColor3f (0.0, 0.0, 1.0);
+glVertex2i(320, 480);
+glVertex2i(320, 0);
+glEnd();
+
+
+glBegin(GL_TRIANGLES); //Triangle
+glColor3f (0.0, 0.0, 1.0);
+glVertex2i(400, 50);
+glColor3f (0.0, 0.0, 1.0);
+glVertex2i(600, 50);
+glColor3f (0.0, 0.0, 1.0);
+glVertex2i(500, 200);
+glEnd();
+
+glBegin(GL_LINES);     /*H*/
+glVertex2i(400, 300);
+glVertex2i(400, 450);
+glVertex2i(500, 300);
+glVertex2i(500, 450);
+glVertex2i(400, 375);
+glVertex2i(500, 375);
+glEnd();
+
+
+glBegin(GL_LINES); //X
+glVertex2i(50, 50);
+glVertex2i(250, 200);
+glVertex2i(250, 50);
+glVertex2i(50, 200);
+glEnd();
+
+glBegin(GL_LINES);
+glVertex2i(50, 280);
+glVertex2i(250, 450);
+glVertex2i(250, 280);
+glVertex2i(50, 450);
+glVertex2i(50, 450);
+glVertex2i(250, 450);
+glVertex2i(50, 280);
+glVertex2i(250, 280);
+
+glEnd();
+
+
+
+glFlush ();
+}
+
+void myInit (void)
+{
+glClearColor(1.0, 1.0, 1.0, 0.0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(0.0, 640.0, 0.0, 480.0);
+}
+
+int main(int argc, char** argv)
+{
+glutInit(&argc, argv);
+glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+glutInitWindowSize (640, 480);
+glutInitWindowPosition (300, 200);
+glutCreateWindow ("Assignment");
+glutDisplayFunc(myDisplay);
+myInit ();
+glutMainLoop();
+}
