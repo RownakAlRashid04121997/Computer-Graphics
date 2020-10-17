@@ -1,0 +1,113 @@
+#include<stdio.h>
+#include <iostream>
+#include<GL/gl.h>
+#include <GL/glut.h>
+#include<math.h>
+using namespace std;
+
+float Xp,Yp,X1,Y1,R,d,E,SE;
+
+void plot(float X, float Y)
+{
+glClear (GL_COLOR_BUFFER_BIT);
+glColor3f (0.0, 0.0, 1.0);
+glPointSize(2.0);
+glBegin(GL_POINTS);
+glColor3f (0.0, 0.0, 1.0);
+glVertex2i(X,Y);
+
+}
+
+void myDisplay(void)
+{
+
+d=(1-R);
+Xp=0;
+Yp=R;
+
+while(true)
+{
+    if(Xp<Yp)
+    {
+        if(d<0)
+        {
+            cout<<"d:"<<" "<<d<<endl;
+            d=d+((2*Xp)+3);
+            Xp=Xp+1;
+            Yp=Yp;
+            cout<<Xp+X1<<Yp+Y1<<endl;
+            //plot(Xp+X1,Yp+Y1);
+
+        }
+        else if(d>=0)
+        {
+
+            cout<<"d:"<<" "<<d<<endl;
+            d=d+((2*(Xp-Yp))+5);
+            Xp=Xp+1;
+            Yp=Yp-1;
+            cout<<Xp+X1<<Yp+Y1<<endl;
+           // plot(Xp+X1,Yp+Y1);
+
+        }
+        plot(X1+Xp,Y1+Yp);
+        plot(X1+Xp,Y1-Yp);
+        plot(X1-Xp,Y1+Yp);
+        plot(X1-Xp,Y1-Yp);
+        plot(X1+Yp,Y1+Xp);
+        plot(X1+Yp,Y1-Xp);
+        plot(X1-Yp,Y1+Xp);
+        plot(X1-Yp,Y1-Xp);
+
+
+
+    }
+
+    else
+    {
+        break;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+glEnd();
+glFlush();
+}
+
+
+void myInit (void)
+{
+glClearColor(1.0, 1.0, 1.0, 0.0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(0.0, 640.0, 0.0, 480.0);
+}
+
+int main(int argc, char** argv)
+{
+cout<<"Enter value of X1"<<" "<<endl;
+cin>>X1;
+cout<<"Enter value of Y1"<<" "<<endl;
+cin>>Y1;
+cout<<"Enter value of R"<<" "<<endl;
+cin>>R;
+glutInit(&argc, argv);
+glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+glutInitWindowSize (640, 480);
+glutInitWindowPosition (300, 200);
+glutCreateWindow ("Assignment 5");
+glutDisplayFunc(myDisplay);
+myInit ();
+glutMainLoop();
+
+}
+
+
