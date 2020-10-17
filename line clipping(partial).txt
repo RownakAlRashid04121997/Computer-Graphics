@@ -1,0 +1,82 @@
+#include<stdio.h>
+#include <iostream>
+#include<GL/gl.h>
+#include <GL/glut.h>
+#include<math.h>
+using namespace std;
+
+float Xmax,Xmin,Ymax,Ymin,X1,Y1,X2,Y2,Ynew,Xnew,slope;
+
+
+void myDisplay(void)
+{
+
+glClear (GL_COLOR_BUFFER_BIT);
+glColor3f (0.0, 0.0, 1.0);
+glPointSize(5.0);
+
+ Xmin=0;
+ Xmax=300;
+ Ymin=0;
+ Ymax=300;
+
+ slope=((Y2-Y1)/(X2-X1));
+ cout<<slope<<endl;
+
+ Ynew= round(((slope*(Xmin-X1))+Y1));  //1st intersection point
+ cout<<"Ynew :"<<Ynew<<endl;
+ cout<<" 1st 2 points are:  "<<Xmin<<","<<Ynew<<endl;
+
+ Xnew= round( (((1/slope)*(Ymax-Y1))+X1));  //2ns intersection point
+ cout<<"Xnew :"<<Xnew<<endl;
+ cout<<" 2nd 2 points are:  "<<Xnew<<","<<Ymax<<endl;
+
+
+glBegin(GL_LINES);
+glColor3f (1.0, 0.0, 0.0);
+glVertex2i(Xmin, Ynew);
+glVertex2i(Xnew, Ymax);
+glEnd();
+glFlush();
+
+
+}
+
+
+int round (float Yi)
+{
+    Yi=Yi+0.5;
+    floor(Yi);
+    return Yi;
+}
+
+
+void myInit (void)
+{
+glClearColor(1.0, 1.0, 1.0, 0.0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(0.0, 300.0, 0.0, 300.0);
+}
+
+int main(int argc, char** argv)
+{
+
+cout<<"Enter value of X1,Y1"<<" "<<endl;
+cin>>X1>>Y1;
+cout<<"Enter value of X2,Y2"<<" "<<endl;
+cin>>X2>>Y2;
+
+
+glutInit(&argc, argv);
+glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+glutInitWindowSize (300, 300);
+glutInitWindowPosition (300, 200);
+glutCreateWindow ("Assignment 5");
+glutDisplayFunc(myDisplay);
+myInit ();
+glutMainLoop();
+
+}
+
+
