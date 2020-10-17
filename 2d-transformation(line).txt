@@ -1,0 +1,119 @@
+#include<stdio.h>
+#include <iostream>
+#include<GL/gl.h>
+#include <GL/glut.h>
+#include<math.h>
+using namespace std;
+
+float X1,X2,Y1,Y2,tx,ty,angle,Sx,Sy;
+
+
+void myDisplay(void)
+{
+
+glClear (GL_COLOR_BUFFER_BIT);
+glColor3f (0.0, 0.0, 1.0);
+glPointSize(5.0);
+
+glBegin(GL_LINE_LOOP); // 0
+glColor3f (1.0, 0.0, 0.0);
+glVertex2i(X1, Y1);
+glVertex2i(X2, Y2);
+glEnd();
+
+float Xt1,Xt2,Xt3,Yt1,Yt2,Yt3; //Translation
+
+Xt1=X1+tx;
+Yt1=Y1+ty;
+Xt2=X2+tx;
+Yt2=Y2+ty;
+
+glBegin(GL_LINE_LOOP);
+glColor3f (1.0, 0.0, 0.0);
+glVertex2i(Xt1, Yt1);
+glVertex2i(Xt2, Yt2);
+glEnd();
+
+
+angle=((angle*3.1416)/180);
+float Xr1,Xr2,Yr1,Yr2;  //Rotating(clockwise)
+
+Xr1=X1*cos(angle)+Y1*sin(angle);
+Yr1=Y1*cos(angle)-X1*sin(angle);
+Xr2=X2*cos(angle)+Y2*sin(angle);
+Yr2=Y2*cos(angle)-X2*sin(angle);
+
+glBegin(GL_LINE_LOOP);
+glColor3f (1.0, 0.0, 0.0);
+glVertex2i(Xr1, Yr1);
+glVertex2i(Xr2, Yr2);
+glEnd();
+
+
+float Xac1,Xac2,Xac3,Yac1,Yac2,Yac3; //Rotation(anticlock)
+Xac1=X1*cos(angle)-Y1*sin(angle);
+Yac1=X1*sin(angle)+Y1*cos(angle);
+Xac2=X2*cos(angle)-Y2*sin(angle);
+Yac2=X2*sin(angle)+Y2*cos(angle);
+
+
+glBegin(GL_LINE_LOOP);
+glColor3f (1.0, 0.0, 0.0);
+glVertex2i(Xac1, Yac1);
+glVertex2i(Xac2, Yac2);
+glEnd();
+
+
+float Xs1,Xs2,Ys1,Ys2; //Scalling
+Xs1=X1*Sx;
+Ys1=Y1*Sy;
+Xs2=X2*Sx;
+Ys2=Y2*Sy;
+
+glBegin(GL_LINE_LOOP);
+glColor3f (1.0, 0.0, 0.0);
+glVertex2i(Xs1, Ys1);
+glVertex2i(Xs2, Ys2);
+glEnd();
+
+
+glFlush();
+}
+
+
+void myInit (void)
+{
+glClearColor(1.0, 1.0, 1.0, 0.0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(0.0, 640.0, 0.0, 480.0);
+}
+
+int main(int argc, char** argv)
+{
+
+cout<<"Enter value of X1,Y1"<<" "<<endl;
+cin>>X1>>Y1;
+cout<<"Enter value of X2,Y2"<<" "<<endl;
+cin>>X2>>Y2;
+cout<<"Enter value of tx,ty for translation"<<" "<<endl;
+cin>>tx>>ty;
+cout<<"Enter value of angle for clockwise rotation and anticlockwise rotation"<<" "<<endl;
+cin>>angle;
+cout<<"Enter value of Sx,Sy for scalling "<<" "<<endl;
+cin>>Sx>>Sy;
+
+
+
+glutInit(&argc, argv);
+glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+glutInitWindowSize (640, 480);
+glutInitWindowPosition (300, 200);
+glutCreateWindow ("Assignment 5");
+glutDisplayFunc(myDisplay);
+myInit ();
+glutMainLoop();
+
+}
+
+
