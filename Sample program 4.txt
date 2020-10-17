@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include <iostream>
+#include<GL/gl.h>
+#include <GL/glut.h>
+#include<math.h>
+using namespace std;
+
+float Xi,Yi,Xn,Yn;
+
+void plot(float X, float Y)
+{
+glClear (GL_COLOR_BUFFER_BIT);
+glColor3f (0.0, 0.0, 1.0);
+glPointSize(2.0);
+glBegin(GL_POINTS);
+glColor3f (0.0, 0.0, 1.0);
+glVertex2i(X,Y);
+
+}
+
+void myDisplay(void)
+{
+float dy,dx,slope;
+dx=(Xn-Xi);
+dy=(Yn-Yi);
+slope=(dy/dx);
+
+for(int i=Xi;i<Xn;i++)
+{
+    if(slope<1)
+  {
+        Xi=Xi+1;
+        Yi=Yi+slope;
+        plot(Xi,round(Yi));
+   }
+
+    else if(slope>1)
+     {
+         Xi=(Xi+(1/slope));
+         Yi=Yi+1;
+         plot(round(Xi),Yi);
+
+     }
+
+      else
+        {
+           Xi=Xi+1;
+           Yi=Yi+1;
+           plot(Xi,Yi);
+        }
+}
+glEnd();
+glFlush ();
+}
+
+void myInit (void)
+{
+glClearColor(1.0, 1.0, 1.0, 0.0);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+gluOrtho2D(0.0, 640.0, 0.0, 480.0);
+}
+
+int main(int argc, char** argv)
+{
+cout<<"Enter values of Xi and Yi"<<" "<<endl;
+cin>>Xi>>Yi;
+cout<<"Enter values of Xn and Yn"<<" "<<endl;
+cin>>Xn>>Yn;
+glutInit(&argc, argv);
+glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+glutInitWindowSize (640, 480);
+glutInitWindowPosition (300, 200);
+glutCreateWindow ("Assignment 4");
+glutDisplayFunc(myDisplay);
+myInit ();
+glutMainLoop();
+
+}
