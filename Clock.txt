@@ -1,0 +1,105 @@
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+float x,y,i;
+float counter1=0.0;
+float counter2=0.0;
+float counter3=0.0;
+
+void fan(void)
+{
+	glClearColor(0.0,0.0,0.0,0.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
+
+
+	glBegin(GL_TRIANGLE_FAN);         //circle 3
+		glColor3ub(0,0,255);
+		for(i=0;i<=2*3.14;i+=0.0001)
+		{
+			x=0.71*sin(i);
+			y=0.91*cos(i);
+			glVertex2f(x,y);
+		}
+	glEnd();
+    glPopMatrix();
+
+
+	glBegin(GL_TRIANGLE_FAN);         //circle 2
+		glColor3ub(255,255,255);
+		for(i=0;i<=2*3.14;i+=0.0001)
+		{
+			x=0.60*sin(i);
+			y=0.80*cos(i);
+			glVertex2f(x,y);
+		}
+	glEnd();
+    glPopMatrix();
+
+
+	glPushMatrix();
+	glBegin(GL_TRIANGLE_FAN);         //circle 1
+		glColor3ub(0,0,0);
+		for(i=0;i<=2*3.14;i+=0.0001)
+		{
+			x=0.080*sin(i);
+			y=0.1*cos(i);
+			glVertex2f(x,y);
+		}
+	glEnd();
+    glPopMatrix();
+
+    glPushMatrix();
+	glRotatef(counter1,0.0,0.0,-1.0);
+	counter1+=1;
+	glBegin(GL_QUADS);
+	//minute
+		glColor3ub(0,0,0);
+		glVertex2f(-.02,0);
+		glVertex2f(.02,0);
+		glVertex2f(.02,.6);
+			glVertex2f(-.02,.6);
+			glEnd();
+			glPopMatrix();
+	glPushMatrix();
+glRotatef(counter2,0.0,0.0,-1.0);
+	counter2+=5;
+			glBegin(GL_QUADS);
+			//second
+		glColor3ub(0,0,0);
+		glVertex2f(-.01,-.5);
+		glVertex2f(.01,-.5);
+        glVertex2f(.01,.0);
+        glVertex2f(-.01,0);
+			glEnd();
+			glPopMatrix();
+
+	glPushMatrix();
+glRotatef(counter3,0.0,0.0,-1.0);
+	counter3+=0.5;
+        glBegin(GL_QUADS);
+			//hour
+        glColor3ub(0,0,0);
+		glVertex2f(0,-.03);
+		glVertex2f(.3,-.03);
+		glVertex2f(.3,.03);
+			glVertex2f(0,.03);
+	glEnd();
+	glPopMatrix();
+
+
+	glutSwapBuffers();
+}
+int main(int argc,char** argv)
+{
+	glutInit(&argc,argv);
+	glutInitDisplayMode(GLUT_RGB|GLUT_DOUBLE);
+	glutInitWindowSize(640,480);
+	glutCreateWindow("Fan");
+	glutDisplayFunc(fan);
+	glutIdleFunc(fan);
+	glutMainLoop();
+	return 0;
+}
